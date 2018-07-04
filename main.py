@@ -35,7 +35,10 @@ def change_timestamp(date_ms):
 def collect_and_store(trade_suit):
     while True:
         logger.info("Start collect trade data on %s" % trade_suit)
-        data = InfoFromAPI(trade_suit).get_trade_info()
+        try:
+            data = InfoFromAPI(trade_suit).get_trade_info()
+        except Exception:
+            continue
         db_conn = MYSQL(trade_suit)
         for info_dict in data:
             datetime = change_timestamp(info_dict["date_ms"])
