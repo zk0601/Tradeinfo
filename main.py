@@ -42,7 +42,8 @@ def collect_and_store(trade_suit):
         db_conn = MYSQL(trade_suit)
         for info_dict in data:
             datetime = change_timestamp(info_dict["date_ms"])
-            db_conn.store_data_in_table(trade_id=info_dict["tid"], datetime='"{0}"'.format(datetime), price=info_dict["price"],
+            price = info_dict["price"]
+            db_conn.store_data_in_table(trade_id=info_dict["tid"], datetime='"{0}"'.format(datetime), price=price,
                                         amount=info_dict["amount"], trade_type='"{0}"'.format(info_dict["type"]))
         print("complete a storage on %s" % trade_suit)
         time.sleep(COLLECT_INTERVAL_TIME)

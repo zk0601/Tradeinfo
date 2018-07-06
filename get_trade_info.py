@@ -18,9 +18,9 @@ class InfoFromAPI(object):
 
 
 # if __name__ == '__main__':
-#     a = InfoFromAPI('insur_usdt')
+#     a = InfoFromAPI('insur_btc')
 #     print(a.get_trade_info())
 #     print(InfoFromAPI('insur_eth').get_trade_info())
 #     a = InfoFromAPI('insur_eth').get_trade_info()
 #     print(a[0])
-#     pass
+
