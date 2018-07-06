@@ -53,11 +53,11 @@ def statistic_data(data_tuple):
         for value in value_list:
             trade += 1
             amount += round(value[3], 2)
-            price += round(value[2] * value[3], 8)
+            price += round(value[2] * value[3], 2)
             price_list.append(value[2])
         sum_trade.append(trade)
         sum_amount.append(round(amount, 2))
-        sum_price.append(round(price, 8))
+        sum_price.append(round(price, 2))
         high.append(max(price_list))
         low.append(min(price_list))
         average.append(float(numpy.mean(price_list)))
@@ -81,7 +81,6 @@ def statistic_data(data_tuple):
     trade_info = DataFrame(df_dict, index=index)
     trade_info = trade_info.T
     trade_info.columns.name = '统计项\\时间段(hour)'
-    print(trade_info)
     return trade_info
 
 
