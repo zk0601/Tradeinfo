@@ -51,21 +51,20 @@ def statistic_data(data_tuple):
         trade, amount, price = 0, decimal.Decimal(0), decimal.Decimal(0)
         price_list = []
         for value in value_list:
-            tmp = value[2]
             trade += 1
-            amount += value[3]
-            price += tmp
-            price_list.append(tmp)
+            amount += round(value[3], 2)
+            price += round(value[2] * value[3], 8)
+            price_list.append(value[2])
         sum_trade.append(trade)
-        sum_amount.append(float(amount))
-        sum_price.append(float(price))
+        sum_amount.append(round(amount, 2))
+        sum_price.append(round(price, 8))
         high.append(max(price_list))
         low.append(min(price_list))
         average.append(float(numpy.mean(price_list)))
-    #汇总当日数据
+    # 汇总当日数据
     index.append('全天数据总结')
     sum_trade.append(sum(sum_trade))
-    sum_amount.append(sum(sum_trade))
+    sum_amount.append(sum(sum_amount))
     sum_price.append(sum(sum_price))
     high.append(max(high))
     low.append(min(low))
@@ -73,15 +72,16 @@ def statistic_data(data_tuple):
 
     df_dict = {
         '交易操作总数': sum_trade,
-        '总交易数量': sum_amount,
-        '总交易金额': sum_price,
+        '交易总数量': sum_amount,
+        '交易总金额': sum_price,
         '最高交易价格': high,
         '最低交易价格': low,
-        '评价交易价格': average
+        '平均交易价格': average
     }
     trade_info = DataFrame(df_dict, index=index)
     trade_info = trade_info.T
     trade_info.columns.name = '统计项\\时间段(hour)'
+    print(trade_info)
     return trade_info
 
 
