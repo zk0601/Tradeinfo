@@ -54,7 +54,7 @@ class MYSQL(object):
         trade_type = kwargs.get('trade_type', None)
         sql = """INSERT INTO %s(TRADE_ID,
                  DATETIME, PRICE, AMOUNT, TRADE_TYPE)
-                 VALUES (%d, %s, %g, %g, %s)""" \
+                 VALUES (%d, %s, %e, %g, %s)""" \
               % (self.trade_suit, trade_id, datetime, price, amount, trade_type)
         try:
             self.cursor.execute(sql)
