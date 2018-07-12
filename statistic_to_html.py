@@ -8,11 +8,12 @@ from pandas import DataFrame
 from Mysql_connect import MYSQL
 
 TRADE_SUIT_LIST = ['insur_eth', 'insur_btc', 'insur_usdt']
+numpy.set_printoptions(suppress=True)
 
 
 def main():
     yesterday_date = (datetime.datetime.now() + datetime.timedelta(days=-1)).strftime('%Y%m%d')
-    for trade_suit in TRADE_SUIT_LIST[2:]:
+    for trade_suit in TRADE_SUIT_LIST:
         data_dict = {}
         sell_data = MYSQL(trade_suit).select_data_from_db('sell', yesterday_date)
         buy_data = MYSQL(trade_suit).select_data_from_db('buy', yesterday_date)
@@ -20,7 +21,7 @@ def main():
         data_dict['buy_data'] = statistic_data(buy_data)
         html_file = os.path.join('statistic_html', '%s_%s.html' % (trade_suit, yesterday_date))
         yesterday_str = yesterday_date[:4] + '-' + yesterday_date[4:6] + '-' + yesterday_date[6:]
-        with open(html_file, 'w') as f:
+        with open(html_file, 'w', encoding='utf-8') as f:
             f.write('<h1>%s:%s</h1>' % (yesterday_str, trade_suit))
             f.write('<h2>Sell_info</h2>')
             for line in data_dict['sell_data'].to_html():
@@ -60,7 +61,7 @@ def statistic_data(data_tuple):
         sum_price.append(round(price, 2))
         high.append(max(price_list))
         low.append(min(price_list))
-        average.append(float(numpy.mean(price_list)))
+        average.append(round(numpy.mean(price_list), 8))
     # 汇总当日数据
     index.append('全天数据总结')
     sum_trade.append(sum(sum_trade))
@@ -68,7 +69,7 @@ def statistic_data(data_tuple):
     sum_price.append(sum(sum_price))
     high.append(max(high))
     low.append(min(low))
-    average.append(float(numpy.mean(average)))
+    average.append(round(numpy.mean(average), 8))
 
     df_dict = {
         '交易操作总数': sum_trade,
