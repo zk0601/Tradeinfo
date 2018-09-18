@@ -6,7 +6,7 @@ logger = log()
 
 class MYSQL(object):
     def __init__(self, trade_suit):
-        self.server_ip = "47.91.252.155"
+        self.server_ip = "127.0.0.1"
         self.username = 'root'
         self.passwd = '123456'
         self.database_name = 'trade_info'
@@ -54,7 +54,7 @@ class MYSQL(object):
         trade_type = kwargs.get('trade_type', None)
         sql = """INSERT INTO %s(TRADE_ID,
                  DATETIME, PRICE, AMOUNT, TRADE_TYPE)
-                 VALUES (%d, %s, %g, %g, %s)""" \
+                 VALUES (%d, %s, %e, %g, %s)""" \
               % (self.trade_suit, trade_id, datetime, price, amount, trade_type)
         try:
             self.cursor.execute(sql)
